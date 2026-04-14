@@ -15,6 +15,7 @@ from math import e
 from turtle import clearscreen
 import paramiko
 import time
+from dotenv import load_dotenv
 import getpass
 import threading
 import sys
@@ -235,8 +236,10 @@ class SSHClientConnection:
         self.hostname = '52.172.50.136'
         self.port = 22
         self.username = 'azureuser'
+        load_dotenv()
         self.project_root = os.path.dirname(os.path.abspath(__file__))
-        self.key_file = os.path.join(self.project_root, 'ssh_key.ppk')
+        self.key_filename = os.getenv("SSH_KEY_FILENAME")
+        self.key_file = os.path.join(self.project_root, self.key_filename)
         self.client = None
         self.shell = None
         self.output = ""

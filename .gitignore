@@ -1,3 +1,4 @@
 #Ignore SSH keys
 ssh_key.ppk
 scc-dev-fw-wireguard_key_ossh.ppk
+.env
