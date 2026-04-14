@@ -30,9 +30,61 @@ import csv
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 import matplotlib.dates as mdates
+import tkinter as tk
+from tkinter import filedialog, messagebox
 
 
+# --- SSH Key Selector UI ---
+class SSHKeySelector(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("SSH Key Selector")
+        self.geometry("600x300")
+        self.ssh_key_path = None
 
+        self.label = tk.Label(self, text="Select your SSH key file:")
+        self.label.pack(pady=10)
+
+        self.entry = tk.Entry(self, width=40)
+        self.entry.pack(pady=5)
+
+        self.browse_button = tk.Button(self, text="Browse...", command=self.browse_file)
+        self.browse_button.pack(pady=5)
+
+        self.run_button = tk.Button(self, text="RUN", command=self.on_run)
+        self.run_button.pack(pady=10)
+
+    def browse_file(self):
+        try:
+            file_path = filedialog.askopenfilename(
+                title="Select SSH Key File",
+                filetypes=[("Private Key Files", "*.ppk *.pem *.key"), ("All Files", "*.*")]
+            )
+            if file_path:
+                self.entry.delete(0, tk.END)
+                self.entry.insert(0, file_path)
+                self.ssh_key_path = file_path
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred while selecting the file: {e}")
+
+    def on_run(self):
+        try:
+            self.ssh_key_path = self.entry.get()
+            if not self.ssh_key_path or not os.path.isfile(self.ssh_key_path):
+                messagebox.showerror("Error", "Please select a valid SSH key file.")
+                return
+            self.destroy()
+        except Exception as e:
+            messagebox.showerror("Error", f"An error occurred: {e}")
+
+def get_ssh_key_path():
+    try:
+        app = SSHKeySelector()
+        app.mainloop()
+        return app.ssh_key_path
+    except Exception as e:
+        print(f"An error occurred while getting the SSH key path: {e}")
+        return None
 
 
 #Additional independent classes
@@ -892,22 +944,25 @@ class HardwareInfo:
 
 #This should go in an independent file in the project as static params
 if __name__ == "__main__":
-
-    
-
+    # Get SSH key path from user
+    key_path = get_ssh_key_path()
+    if not key_path:
+        print("SSH key path is required to proceed. Exiting the application.")
+        exit(1)
+    # Create SSH client and set the key file
     ssh_client = SSHClientConnection()
+    
+    
     ssh_session = Model(ssh_client)
 
 
     print("*****************V1 SSH TOOL- V1*****************\n")
+    
     try:
-        #password = getpass.getpass('Enter your password:*')
-
-        #if password == "CCCteamHeros25@!":
-        #print("\n\nAuthencication succesful!...Processing....\n\n")
+        
         ssh_session.modelApp()
-        #else:
-        #    print("\nIncorrect password. Please relaunch the app and try again")
+        
+        
     except Exception as e:
         print(f"An error occured while logging in: {e}")
         
