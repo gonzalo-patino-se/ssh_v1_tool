@@ -205,26 +205,25 @@ class Model:
         #Fixme: Change for switch-case State machine with multiple threading
         while True:
             #If everything is good, the model is ready to accept requests from the controller
-            print("\nValidation successful. Entering the model main menu...\n")
-            
+    
+            print("="*80 + "\n")
 
-            print("""
-            Available options: Please type the word to execute: 
-            1. 'bye' - Close the SSH client and exit.
-            2. 'redis' - Go into the Redis container and obtain Power Parameters from Scc Card
-            3. 'signal strength' - Get the WiFi signal strength.
-            4. 'network interface' - Get the network interface information.
-            5. 'frequency band' - Get the frequency band information.
-            6. 'wifi network driver' - Get the WiFi network driver information.
-            7. 'process signal strength' - Process the signal strength dataset.
-            8. 'plot signal strength' - Plot the signal strength data. Still Under Development- 
-            9. 'hardware info' - Get hardware information including bootloader, firmware versions, and all hardware info.
-            10. Any other command - Execute the command on the SSH client.
-            """)
-
-
-
-            print("\n*******************Main Menu- Model-Waiting for controller input******************************\n\n")
+            print("="*80)
+            print("MAIN MENU")
+            print("="*80)
+            print("Available options (type the word to execute):")
+            print("  1. 'bye'                - Close the SSH client and exit.")
+            print("  2. 'redis'              - Go into the Redis container and obtain Power Parameters from Scc Card")
+            print("  3. 'signal strength'    - Get the WiFi signal strength.")
+            print("  4. 'network interface'  - Get the network interface information.")
+            print("  5. 'frequency band'     - Get the frequency band information.")
+            print("  6. 'wifi network driver'- Get the WiFi network driver information.")
+            print("  7. 'process signal strength' - Process the signal strength dataset.")
+            print("  8. 'plot signal strength'    - Plot the signal strength data. (Still Under Development)")
+            print("  9. 'hardware info'      - Get hardware information including bootloader, firmware versions, and all hardware info.")
+            print(" 10. Any other command    - Execute the command on the SSH client.")
+            print("="*80)
+            print("\n******************* Main Menu - Waiting for controller input *******************\n")
             command = input("Enter ssh: *")
 
             if command.lower() == 'bye':
