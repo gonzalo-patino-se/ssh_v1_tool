@@ -47,6 +47,19 @@ class SSHKeySelector(tk.Tk):
 
         self.entry = tk.Entry(self, width=40)
         self.entry.pack(pady=5)
+        
+        # Load last path if available
+        try:
+            with open("last_ssh_key.txt", "r") as f:
+                last_path = f.read().strip()
+                if last_path:
+                    self.entry.insert(0, last_path)
+                    self.ssh_key_path = last_path
+                else:
+                    print("No last SSH key path found.")
+                    
+        except FileNotFoundError:
+            pass
 
         self.browse_button = tk.Button(self, text="Browse...", command=self.browse_file)
         self.browse_button.pack(pady=5)
@@ -73,6 +86,9 @@ class SSHKeySelector(tk.Tk):
             if not self.ssh_key_path or not os.path.isfile(self.ssh_key_path):
                 messagebox.showerror("Error", "Please select a valid SSH key file.")
                 return
+            # Save the path
+            with open("last_ssh_key.txt", "w") as f:
+                f.write(self.ssh_key_path)
             self.destroy()
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred: {e}")
