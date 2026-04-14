@@ -58,7 +58,7 @@ class FileHandler:
         try:
             # Check if the file already exists
             file_exists = os.path.exists(self.filename)
-            print(f"File exists: {file_exists}\n")  # Debugging print statement
+            #print(f"File exists: {file_exists}\n")  # Debugging print statement
 
             # Open the file in append mode
             with open(self.filename, mode='a', newline='') as file:
@@ -116,7 +116,7 @@ class Model:
         #Obtain serial number
         serial_number = input("\n\nPlease insert serial number:*")
         self.ssh_client.clean_serial_number(serial_number) #Setter: Make sure serial number is upper case and delete any unwanted spaces 
-        print(f"Debugging: Serial number inserted was:{self.ssh_client.serial_number}")
+        #print(f"Debugging: Serial number inserted was:{self.ssh_client.serial_number}")
 
         
 
@@ -427,18 +427,18 @@ class SSHClientConnection:
             float_strings = re.findall(float_pattern, s)
             # Convert matched strings to float
             float_numbers = [float(num) for num in float_strings]
-            print(f"Debugging: Float number detected is {float_numbers}[unit: watts, etc]\n")
+            #print(f"Debugging: Float number detected is {float_numbers}[unit: watts, etc]\n")
             return float_numbers
 
-        print("Debugging: Redis Container Session...procesing...please wait...")
+        #print("Debugging: Redis Container Session...procesing...please wait...")
         output = str(self.execute_command(command))
-        print(f"Debugging: Output from docker redis is: {output}\n")
+        #print(f"Debugging: Output from docker redis is: {output}\n")
         #FIXMEWait until asking for command
         #FIXMEwhile not output.strip().endswith("#"):
         #FIXME    print("Loading docker...")
         #FIXME    time.sleep(0.1)
         time.sleep(0.5) #Wait for command
-        print("Debugging:Docker processing...please wait...:\n")
+        #print("Debugging:Docker processing...please wait...:\n")
         docker_redis_command = docker_redis_command
         redis_container_ouput = self.execute_command(docker_redis_command) #Send docker redis command, get the output
         print(f"redis_container_output is: {redis_container_ouput}\n")
@@ -448,7 +448,7 @@ class SSHClientConnection:
 
         time.sleep(0.5)
         self.execute_command("exit") #close the session
-        print("Debug: Exited the docker redis session\n")
+        print("Left the docker redis session\n")
         return value
 
     def info_docker_redis_session(self, redisCommand):
@@ -457,25 +457,25 @@ class SSHClientConnection:
         command = "docker exec -it apps-redis-1 sh"
         
 
-        print("Debugging: Info Redis Container Session...procesing...please wait...")
+        print("Info Redis Container Session...procesing...please wait...")
         output = str(self.execute_command(command))
-        print(f"Debugging: Output from docker redis is: {output}\n")
+        #print(f"Debugging: Output from docker redis is: {output}\n")
         #FIXMEWait until asking for command
         #FIXMEwhile not output.strip().endswith("#"):
         #FIXME    print("Loading docker...")
         #FIXME    time.sleep(0.1)
         time.sleep(0.5) #Wait for command
-        print("Debugging: Docker processing...please wait...:\n")
+        #print("Debugging: Docker processing...please wait...:\n")
         docker_redis_command = docker_redis_command
         redis_container_ouput = self.execute_command(docker_redis_command) #Send docker redis command for info, get the output
-        print(f"Debugging: redis_container_output info is: {redis_container_ouput}\n")
+        #print(f"Debugging: redis_container_output info is: {redis_container_ouput}\n")
         #Process and obtain value
         
     
 
         time.sleep(0.5)
         self.execute_command("exit") #close the session
-        print("Debugging: Exited the docker redis session\n")
+        #print("Debugging: Exited the docker redis session\n")
         return redis_container_ouput
 
 
@@ -573,7 +573,7 @@ class SSHClientConnection:
     def get_output_from_console(self):
         
         
-        print("Debugging: get_output_from_console method\n")
+        #print("Debugging: get_output_from_console method\n")
         
         
         try:
@@ -588,7 +588,7 @@ class SSHClientConnection:
                 #Append to output string
             
                 self.output += chunk
-                print(f"Debugging- get_output_from_console self.output: ****{self.output}****\n")
+                #print(f"Debugging- get_output_from_console self.output: ****{self.output}****\n")
                 
             
                 return self.output
@@ -623,7 +623,7 @@ class WifiAnalysis:
         signal_strength_output = self.sshClientConnection.execute_command(command)
 
         # Debugging: Print the raw output from the command
-        print(f"Debugging: Raw command output: {signal_strength_output}")
+        #print(f"Debugging: Raw command output: {signal_strength_output}")
 
         # Wait for the command to execute
         time.sleep(1)
@@ -714,7 +714,7 @@ class WifiAnalysis:
                 temp_signal_strengths.append(signal_strength)  # Add sample to temporary list
             #time.sleep(0.1)  # Adjust the sleep time as needed
 
-        print(f"\nDebugging: Collected signal strengths: {temp_signal_strengths}\n")  # Debugging print statement
+        #print(f"\nDebugging: Collected signal strengths: {temp_signal_strengths}\n")  # Debugging print statement
 
         if len(temp_signal_strengths) >= 2:  # Step 4: Check if enough samples are collected
             avg_signal_strength = sum(temp_signal_strengths) / len(temp_signal_strengths)  # Calculate average signal strength
@@ -758,8 +758,8 @@ class WifiAnalysis:
                         print("Updating plot with new data...\n")  # Debugging print statement
                         timestamps = [datetime.strptime(ts, "%Y-%m-%d %H:%M:%S") for ts in self.wifiParams["wifiSignalStrength"].keys()]
                         signal_strengths = list(self.wifiParams["wifiSignalStrength"].values())
-                        print(f"Debugging: Timestamps - {timestamps}\n")  # Debugging print statement
-                        print(f"Debugging: Signal Strengths - {signal_strengths}\n")  # Debugging print statement
+                        #print(f"Debugging: Timestamps - {timestamps}\n")  # Debugging print statement
+                        #print(f"Debugging: Signal Strengths - {signal_strengths}\n")  # Debugging print statement
                         line.set_data(timestamps, signal_strengths)
                         locator = mdates.AutoDateLocator()
                         formatter = mdates.ConciseDateFormatter(locator)
@@ -815,15 +815,15 @@ class HardwareInfo:
 
 
     def getBootLoaderVer(self):
-        print("\nDebugging: Getting BootLoader Version")
+        print("\nGetting BootLoader Version")
         bootloaderCommand = "svget [0]/INV/ID/STAT/DSP1_BOOTLOADER_VERSION"
         
         try:                     
             bootLoaderVer = self.sshClientConnection.info_docker_redis_session(bootloaderCommand)
-            print(f"Debugging: bootLoaderVer after obtaining from info.docker_redis_session is:\n{bootLoaderVer}")
+            #print(f"Debugging: bootLoaderVer after obtaining from info.docker_redis_session is:\n{bootLoaderVer}")
             
             self.bootLoaderVer = self._extract_version(bootLoaderVer)#Extract bootloader from output
-            print(f"Debugging:self.bootloader after splitting in method is: {self.bootLoaderVer}\n\n")
+            #print(f"Debugging:self.bootloader after splitting in method is: {self.bootLoaderVer}\n\n")
             
             return self.bootLoaderVer
 
@@ -833,15 +833,15 @@ class HardwareInfo:
             return None
         
     def getSccFirmware(self):
-        print("\nDebugging: Getting Firmware Version:\n\n")
+        #print("\nDebugging: Getting Firmware Version:\n\n")
         firmwareCommand = "svget [0]/INV/FWUP/STAT/CURRENT_VERSION"
 
         try:         
             firmwareVer = self.sshClientConnection.info_docker_redis_session(firmwareCommand)
-            print(f"Debugging: firmware version after obtaining from info.docker_redis_session is:\n{firmwareVer}")
+            #print(f"Debugging: firmware version after obtaining from info.docker_redis_session is:\n{firmwareVer}")
             
             self.firmwareVer = self._extract_version(firmwareVer)#Extract firmware version from output
-            print(f"Debugging:self.firmwareVer after splitting in method is: {self.firmwareVer}\n\n")
+            #print(f"Debugging:self.firmwareVer after splitting in method is: {self.firmwareVer}\n\n")
             
             return self.firmwareVer
         except Exception as e:
@@ -850,17 +850,17 @@ class HardwareInfo:
 
 
     def getAfdFirmware(self):
-        print("\nDebugging: Getting AFD Firmware Version:\n\n")
+        #print("\nDebugging: Getting AFD Firmware Version:\n\n")
         #svget [0]/INV/ID/STAT/AFD_FW_VERSION
         
         afdFirmwareCommand = "svget [0]/INV/ID/STAT/AFD_FW_VERSION"
 
         try:         
             afdFirmwareVer = self.sshClientConnection.info_docker_redis_session(afdFirmwareCommand)
-            print(f"Debugging: AFD firmware version after obtaining from info.docker_redis_session is:\n{afdFirmwareVer}")
+            #print(f"AFD firmware version after obtaining from info.docker_redis_session is:\n{afdFirmwareVer}")
             
             self.afdFirmwareVer = self._extract_version(afdFirmwareVer)#Extract AFD firmware version from output
-            print(f"Debugging:self.elf.afdFirmwareVer after splitting in method is: {self.afdFirmwareVer}\n\n")
+            #print(f"Debugging:self.elf.afdFirmwareVer after splitting in method is: {self.afdFirmwareVer}\n\n")
             
             return self.afdFirmwareVer
         except Exception as e:
@@ -895,7 +895,7 @@ if __name__ == "__main__":
     ssh_session = Model(ssh_client)
 
 
-    print(""" #########Authentication############""")
+    print("*****************V1 SSH TOOL- V1*****************\n")
     try:
         #password = getpass.getpass('Enter your password:*')
 
