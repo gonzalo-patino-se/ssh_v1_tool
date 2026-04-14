@@ -235,7 +235,8 @@ class SSHClientConnection:
         self.hostname = '52.172.50.136'
         self.port = 22
         self.username = 'azureuser'
-        self.key_file = r'C:\Users\sesa800227\AppData\Local\Microsoft\WindowsApps\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\Scripts\CCC System\Model\scc-dev-fw-wireguard_key_ossh.ppk'
+        self.project_root = os.path.dirname(os.path.abspath(__file__))
+        self.key_file = os.path.join(self.project_root, 'ssh_key.ppk')
         self.client = None
         self.shell = None
         self.output = ""
